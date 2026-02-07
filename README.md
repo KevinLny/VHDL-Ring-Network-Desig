@@ -30,14 +30,19 @@ Chaque entité `Node` est autonome et synchrone sur front montant d'horloge.
 
 
 ### Interface (Entrées/Sorties)
-| Port | Direction | Description |
-| :--- | :--- | :--- |
-| `CLK` | In | Horloge système synchrone. |
-| `TR_IN` / `TR_OUT` | In / Out | Bus de données (trames de 8 bits). |
-| `TEST_IN` / `TEST_OK` | In / Out | Activation et acquittement du résultat de l'auto-test. |
-| `ENV_MESS` / `MESS_IN` | In | Contrôle d'envoi et donnée du message utilisateur. |
-| `MESS_OUT` | Out | Port de sortie pour les messages reçus. |
+| Port | Description | Type VHDL | Direction |
+| :--- | :--- | :--- | :--- |
+| **CLK** | Horloge (front montant synchrone) | `std_logic` | **in** |
+| **TR_IN** | Entrée des trames (8 bits) | `std_logic_vector(7 downto 0)` | **in** |
+| **TR_OUT** | Sortie des trames (8 bits) | `std_logic_vector(7 downto 0)` | **out** |
+| **TEST_IN** | Demande d’auto-test | `std_logic` | **in** |
+| **TEST_OK** | Résultat d’auto-test | `std_logic` | **out** |
+| **ENV_MES** | Demande d’envoi d’un message | `std_logic` | **in** |
+| **MESS_IN** | Message à envoyer (4 bits) | `std_logic_vector(3 downto 0)` | **in** |
+| **MESS_OUT** | Message réceptionné (4 bits) | `std_logic_vector(3 downto 0)` | **out** |
 
+### Comportement d'nu noeud
+![Schéma bloc du comportement d’un noeud](img/Schema_bloc.png)
 ---
 
 ## 🕸️ Structure du Réseau
@@ -56,20 +61,12 @@ Le réseau est généré de manière structurelle via des boucles `GENERATE`.
 
 La validation a été effectuée sous **ModelSim** avec les scénarios suivants :
 
-1.  **Test unitaire du Nœud** : Validation des priorités de routage (Adresse 5 vers 8).
+1.  **Test unitaire du Nœud** : Validation des priorités de routage (Adresse 5 vers 8). ![Schéma bloc du comportement d’un noeud](img/Noeud.png)
 2.  **Test d'Auto-test** : Vérification de la boucle complète du message `0x"C"`.
 3.  **Test de communication réseau** : Envoi de messages entre les nœuds d'extrémité.
 
+![Schéma bloc du comportement d’un noeud](img/Reseau.png)
 > **Note :** Toutes les sorties sont synchrones pour garantir la stabilité des signaux lors du passage entre les nœuds.
-
----
-
-## 📂 Organisation des fichiers
-
-* `src/Node.vhd` : Description de l'unité de routage.
-* `src/Network.vhd` : Top-level (instanciation de la matrice $N \times N$).
-* `sim/Node_tb.vhd` : Testbench de l'unité de base.
-* `sim/Network_tb.vhd` : Testbench complet du réseau.
 
 ---
 
@@ -81,12 +78,12 @@ Pour simuler le projet sous ModelSim :
 2.  Compiler les fichiers :
     ```bash
     vcom Node.vhd
-    vcom Network.vhd
-    vcom Network_tb.vhd
+    vcom Reseau.vhd
+    vcom Reseau_tb.vhd
     ```
 3.  Lancer la simulation :
     ```bash
-    vsim Network_tb
+    vsim Reseau_tb
     ```
 
 ---
