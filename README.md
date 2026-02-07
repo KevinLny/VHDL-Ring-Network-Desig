@@ -2,7 +2,7 @@
 
 # 🛰️ Réseau de Communication en Anneau (VHDL)
 
-Projet de conception numérique réalisé dans le cadre de l'année universitaire 2025-2026 (**4EII**).  
+Projet de conception numérique réalisé dans le cadre de l'année à l'INSA de Rennes 2025-2026 (**4EII**).  
 Ce projet porte sur la modélisation et la simulation d'un **réseau de communication synchrone** structuré en anneau, implémenté en VHDL.
 
 ---
